@@ -1,0 +1,52 @@
+[
+  {
+    "model": "app_shop.product",
+    "pk": 1,
+    "fields": {
+      "name": "Видеокарта",
+      "photo": "prod/videoca_9eNJFxO.png",
+      "description": "Не битая, не крашеная, пробег 1000км",
+      "price": 12331.0,
+      "manufacturer": "asdddss",
+      "limited_edition": true,
+      "reviews_count": 0,
+      "count": 0,
+      "category": [
+        1
+      ],
+      "characteristics": [
+        1
+      ],
+      "reviews": [
+        1
+      ],
+      "tegs": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "app_shop.product",
+    "pk": 2,
+    "fields": {
+      "name": "Ноутбук",
+      "photo": "prod/bigGoods2.jpg",
+      "description": "Не битая, не крашеная, пробег 1000км",
+      "price": 13414.0,
+      "manufacturer": "ыааваыа",
+      "limited_edition": true,
+      "reviews_count": 0,
+      "count": 0,
+      "category": [
+        2
+      ],
+      "characteristics": [
+        1
+      ],
+      "reviews": [],
+      "tegs": [
+        1
+      ]
+    }
+  }
+]

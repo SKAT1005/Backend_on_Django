@@ -1,0 +1,20 @@
+[
+  {
+    "model": "app_shop.category",
+    "pk": 1,
+    "fields": {
+      "min_price": 189.0,
+      "image": "prod/videoca.png",
+      "name": "122"
+    }
+  },
+  {
+    "model": "app_shop.category",
+    "pk": 2,
+    "fields": {
+      "min_price": 13441.0,
+      "image": "prod/card.jpg",
+      "name": "1233"
+    }
+  }
+]
