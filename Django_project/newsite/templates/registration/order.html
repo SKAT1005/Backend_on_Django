@@ -99,14 +99,15 @@ p.error-browser
     </div>
     <div class="wrap">
         <div class="row Header-rowMain">
-            <div class="row-block Header-logo"><a class="logo" href="index.html"><img class="logo-image"
-                                                                                      src="{% static 'assets/img/logo.png'%}"
-                                                                                      alt="logo.png"/></a>
+            <div class="row-block Header-logo"><a class="logo" href="http://127.0.0.1:8000/prod/"><img
+                    class="logo-image"
+                    src="{% static 'assets/img/logo.png'%}"
+                    alt="logo.png"/></a>
             </div>
             <nav class="row-block row-block_right Header-menu">
                 <div class="menuModal" id="navigate">
                     <ul class="menu menu_main">
-                        <li class="menu-item"><a class="menu-link" href="http://127.0.0.1:8000/">Главная</a>
+                        <li class="menu-item"><a class="menu-link" href="http://127.0.0.1:8000/prod/">Главная</a>
                         </li>
                         <li class="menu-item"><a class="menu-link" href="http://127.0.0.1:8000/prod/catalog">Каталог</a>
                         </li>
@@ -162,6 +163,8 @@ p.error-browser
                             <div class="CategoriesButton-icon">
                             </div>
                             <span class="CategoriesButton-text">{{category.name}}</span></a>
+                            <a href="http://127.0.0.1:8000/prod/select_category/{{category.id}}"><img
+                                    src="{% static 'assets/img/icons/favorites.svg' %}"/></a>
                         </div>
                         {%endfor%}
                     </div>
@@ -237,7 +240,8 @@ p.error-browser
                             </div>
                             <div>
                                 <label class="toggle">
-                                    <input type="radio" name="delivery" value="Экспресс доставка"><span class="toggle-box"></span><span
+                                    <input type="radio" name="delivery" value="Экспресс доставка"><span
+                                        class="toggle-box"></span><span
                                         class="toggle-text">Экспресс доставка</span>
                                 </label>
                             </div>
@@ -261,15 +265,17 @@ p.error-browser
                         </header>
                         <div class="form-group">
                             <div>
-                                    <label class="toggle">
-                                        <input type="radio" name="pay" value="Онлайн картой" checked="checked"><span class="toggle-box"></span><span class="toggle-text">Онлайн картой</span>
-                                    </label>
-                                </div>
+                                <label class="toggle">
+                                    <input type="radio" name="pay" value="Онлайн картой" checked="checked"><span
+                                        class="toggle-box"></span><span class="toggle-text">Онлайн картой</span>
+                                </label>
+                            </div>
                             <div>
-                                    <label class="toggle">
-                                        <input type="radio" name="pay" value="Онлайн со случайного чужого счета"><span class="toggle-box"></span><span class="toggle-text">Онлайн со случайного чужого счета</span>
-                                    </label>
-                                </div>
+                                <label class="toggle">
+                                    <input type="radio" name="pay" value="Онлайн со случайного чужого счета"><span
+                                        class="toggle-box"></span><span class="toggle-text">Онлайн со случайного чужого счета</span>
+                                </label>
+                            </div>
 
                         </div>
                         <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">Дальше</a>
@@ -304,8 +310,10 @@ p.error-browser
                                 {%for prod in cart%}
                                 <div class="Cart-product">
                                     <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="http://127.0.0.1:8000/prod/catalog/prod/{{prod.id}}"><img
-                                                class="Cart-img" src="{% static 'dd'%}{{prod.photo.url}}" alt="card.jpg"/></a>
+                                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict"
+                                                                                   href="http://127.0.0.1:8000/prod/catalog/prod/{{prod.id}}"><img
+                                                class="Cart-img" src="{% static 'dd'%}{{prod.photo.url}}"
+                                                alt="card.jpg"/></a>
                                         </div>
                                         <div class="Cart-block Cart-block_info"><a class="Cart-title"
                                                                                    href="http://127.0.0.1:8000/prod/catalog/prod/{{prod.id}}">{{prod.name}}</a>

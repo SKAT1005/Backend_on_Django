@@ -192,3 +192,10 @@ def remove_prod_form_cart(request, pk):
     profile.cart.remove(prod)
     profile.save()
     return HttpResponseRedirect('http://127.0.0.1:8000/profile/cart')
+
+
+def select_category(request, pk):
+    category = Category.objects.get(id=pk)
+    profile = Profile.objects.get(id=request.user.id)
+    profile.selected_category.add(category)
+    return HttpResponseRedirect('http://127.0.0.1:8000/prod/catalog/')

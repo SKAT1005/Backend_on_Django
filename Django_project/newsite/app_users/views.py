@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
@@ -324,17 +326,18 @@ class PaymentForm(View):
 class PaymentSomeoneForm(View):
     def get(self, request):
         category = Category.objects.all()
-        return render(request, 'registration/payment.html',
+        return render(request, 'registration/paymentsomeone.html',
                       context={'category': category})
 
     def post(self, request):
         category = Category.objects.all()
         profile = Profile.objects.get(id=request.user.id)
         history = History.objects.filter(user=profile).latest('pub_date')
-        if int(request.POST.get('numero1')) <= 100000000 and int(request.POST.get('numero1')) % 10 != 0 and int(
-                request.POST.get('numero1')) % 2 == 0:
+        cart_number = int(request.POST.get('numero1').replace(' ', ''))
+        if cart_number <= 100000000 and cart_number % 10 != 0 and cart_number % 2 == 0:
             history.status = 'Оплачен'
         else:
             history.status = 'Ошибка'
             history.error = 'Неверные реквизиты карты'
+
         return render(request, 'registration/progressPayment.html', context={'category': category})
