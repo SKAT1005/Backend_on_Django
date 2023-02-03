@@ -173,7 +173,8 @@ p.error-browser
 <div class="Middle Middle_top">
     <div class="Section">
         <div class="wrap">
-            <form class="form Cart" action="#" method="post">\
+            {%if cart%}
+            <form class="form Cart" action="#" method="post">
                 {%for prod in cart%}
                 <div class="Cart-product">
                     <div class="Cart-block Cart-block_row">
@@ -197,7 +198,7 @@ p.error-browser
 
                         </div>
                         <div class="Cart-block Cart-block_amount">
-                            <div class="Cart-block Cart-block_delete"><a class="Cart-delete" href="#"><img
+                            <div class="Cart-block Cart-block_delete"><a class="Cart-delete" href="http://127.0.0.1:8000/prod/catalog/prod/remove_from_cart/{{prod.id}}"><img
                                     src="{% static 'assets/img/icons/card/delete.svg' %}" alt="delete.svg"/></a>
                             </div>
                         </div>
@@ -213,6 +214,9 @@ p.error-browser
                     </div>
                 </div>
             </form>
+            {%else%}
+            <h2>Ваша корзина пуста</h2>
+            {%endif%}
         </div>
     </div>
 </div>
