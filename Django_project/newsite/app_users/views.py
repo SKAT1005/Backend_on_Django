@@ -20,13 +20,15 @@ ERROR_LIST = [
 
 
 class AboutView(View):
+    """Представление для странице О нас"""
+
     def get(self, request):
         category = Category.objects.all
         return render(request, 'registration/about.html', context={'category': category})
 
 
 class Login_View(LoginView):
-    """Представления логина"""
+    """Представление логина"""
     template_name = 'registration/login.html'
 
 
@@ -36,6 +38,7 @@ class Logout_View(LogoutView):
 
 
 class PasswordRecoveryStepOne(View):
+    """Представление первого шага для тех людей, который забыли пароль"""
     error = ''
 
     def get(self, request):
@@ -55,6 +58,8 @@ class PasswordRecoveryStepOne(View):
 
 
 class PasswordRecoveryStepTwo(View):
+    """Представление второго шага для тех людей, который забыли пароль"""
+
     def get(self, request, pk):
         form = PasswordForm
         return render(request, 'registration/password.html', context={'form': form})
@@ -71,6 +76,8 @@ class PasswordRecoveryStepTwo(View):
 
 
 class ChangingThePassword(View):
+    """Представление изменения пароля из личного кабинета"""
+
     def get(self, request):
         form = PasswordForm
         return render(request, 'registration/password.html', context={'form': form})
@@ -87,6 +94,7 @@ class ChangingThePassword(View):
 
 
 def register_view(request):
+    """Представление регистрации"""
     form = RegisterForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
@@ -105,6 +113,8 @@ def register_view(request):
 
 
 class UserView(View):
+    """Представление личного кабинета"""
+
     def get(self, request):
         category = Category.objects.all()
         profile = Profile.objects.get(id=request.user.id)
@@ -118,6 +128,8 @@ class UserView(View):
 
 
 class UserEditFormView(View):
+    """Представление редактирование личного кабинета"""
+
     def get(self, request):
         profile = Profile.objects.get(id=request.user.id)
         category = Category.objects.all()
@@ -147,6 +159,8 @@ class UserEditFormView(View):
 
 
 class HistoryList(View):
+    """Представление списка историй"""
+
     def get(self, request):
         try:
             history_list = History.objects.all()
@@ -159,6 +173,8 @@ class HistoryList(View):
 
 
 class HistoryDetail(View):
+    """Представление детальной истории"""
+
     def get(self, request, pk):
         history = History.objects.get(id=pk)
         category = Category.objects.all()
@@ -168,6 +184,8 @@ class HistoryDetail(View):
 
 
 class CartView(View):
+    """Представление корзины"""
+
     def get(self, request):
         profile = Profile.objects.get(id=request.user.id)
         cart = profile.cart.all()
@@ -179,6 +197,8 @@ class CartView(View):
 
 
 class OrderView(View):
+    """Представление оплаты"""
+
     def get(self, request):
         profile = Profile.objects.get(id=request.user.id)
         cart = profile.cart.all()
@@ -236,6 +256,8 @@ class OrderView(View):
 
 
 class RepeatOrderView(View):
+    """Представление повторной"""
+
     def get(self, request, pk):
         last_history = History.objects.get(id=pk)
         cart = last_history.prods.all()
@@ -293,6 +315,7 @@ class RepeatOrderView(View):
 
 
 def trans_pay(request, pk):
+    """Функция, которая переправляет пользователя на страницу с оплатой"""
     if pk == 1:
         return HttpResponseRedirect('http://127.0.0.1:8000/profile/payment')
     else:
@@ -300,6 +323,8 @@ def trans_pay(request, pk):
 
 
 class PaymentForm(View):
+    """Представление оплаты"""
+
     def get(self, request):
         category = Category.objects.all()
         return render(request, 'registration/payment.html',
@@ -319,12 +344,14 @@ class PaymentForm(View):
             history.error = 'Неверные реквизиты карты'
             history.save()
             return render(request, 'registration/progressPayment.html', context={'category': category})
-        return render(request, 'registration/payment.html',
-                      context={'category': category})
 
 
 class PaymentSomeoneForm(View):
+    """Представление рандомной оплаты"""
+    print(13414141414)
+
     def get(self, request):
+        print(13414141414)
         category = Category.objects.all()
         return render(request, 'registration/paymentsomeone.html',
                       context={'category': category})
