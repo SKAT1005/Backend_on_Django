@@ -319,8 +319,6 @@ class PaymentForm(View):
             history.error = 'Неверные реквизиты карты'
             history.save()
             return render(request, 'registration/progressPayment.html', context={'category': category})
-        return render(request, 'registration/payment.html',
-                      context={'category': category})
 
 
 class PaymentSomeoneForm(View):
