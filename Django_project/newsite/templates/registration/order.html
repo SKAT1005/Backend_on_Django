@@ -330,7 +330,7 @@ p.error-browser
                                 <div class="Cart-total">
                                     <div class="Cart-block Cart-block_total">
                                         <strong class="Cart-title">Итого:
-                                        </strong><span class="Cart-price">{{request.user.users.total_price}}</span>
+                                        </strong><span class="Cart-price">{%if total_price == 0%}{{request.user.users.total_price}}{%else%}{{total_price}}{%endif%}</span>
                                     </div>
                                     <div class="Cart-block">
                                         <button class="btn btn_primary btn_lg" type="submit">Оплатить

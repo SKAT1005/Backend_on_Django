@@ -29,7 +29,7 @@ class History(models.Model):
     prods = models.ManyToManyField(Product, blank=True, related_name='prod', verbose_name='Продукты')
     total_price = models.IntegerField(default=0, blank=True, verbose_name='Общая стоимость')
     type_of_delivery = models.CharField(max_length=32, verbose_name='Тип доставки')
-    type_of_pay = models.CharField(max_length=32, verbose_name='Тип оплаты')
+    type_of_pay = models.CharField(max_length=64, verbose_name='Тип оплаты')
     status = models.CharField(max_length=16, verbose_name='Статус оплаты')
     error = models.CharField(max_length=256, blank=True, verbose_name='Ошибка')
     pub_date = models.DateField(auto_now_add=True)

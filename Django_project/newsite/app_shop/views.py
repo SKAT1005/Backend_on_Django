@@ -11,15 +11,18 @@ class HomePage(View):
     """Представление главной страницы"""
 
     def get(self, request):
-        category = Category.objects.all()
-        profile = Profile.objects.get(id=request.user.id)
-        sell_cat = profile.selected_category.all()[:3]
-        popular_prod = Product.objects.order_by('reviews')[:8]
-        limited_prod = Product.objects.filter(limited_edition=True)[:16]
-        return render(request, 'registration/index.html', context={'sell_cat': sell_cat,
-                                                                   'popular_prod': popular_prod,
-                                                                   'limited_prod': limited_prod,
-                                                                   'category': category})
+        if request.user.is_authenticated:
+            category = Category.objects.all()
+            profile = Profile.objects.get(id=request.user.id)
+            sell_cat = profile.selected_category.all()[:3]
+            popular_prod = Product.objects.order_by('reviews')[:8]
+            limited_prod = Product.objects.filter(limited_edition=True)[:16]
+            return render(request, 'registration/index.html', context={'sell_cat': sell_cat,
+                                                                       'popular_prod': popular_prod,
+                                                                       'limited_prod': limited_prod,
+                                                                       'category': category})
+        else:
+            return HttpResponseRedirect('http://127.0.0.1:8000/prod/catalog/')
 
 
 class Catalog(View):

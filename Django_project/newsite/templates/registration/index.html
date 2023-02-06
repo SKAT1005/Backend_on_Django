@@ -206,9 +206,9 @@ p.error-browser
                 </header>
                 <div class="Cards">
                     {%for popular_prod in popular_prod%}
-                    <div class="Card"><a class="Card-picture"
-                                         href="http://127.0.0.1:8000/prod/catalog/prod/{{popular_prod.id}}"><img
-                            src="{% static 'dd'%}{{popular_prod.photo.url}}"/></a>
+                    <div class="Card">
+                        <a class="Card-picture" href="http://127.0.0.1:8000/prod/catalog/prod/{{popular_prod.id}}"><img
+                                src="{% static 'dd'%}{{popular_prod.photo.url}}"/></a>
                         <div class="Card-content">
                             <strong class="Card-title"><a
                                     href="http://127.0.0.1:8000/prod/catalog/prod/{{popular_prod.id}}">{{popular_prod.name}}</a>
@@ -220,7 +220,8 @@ p.error-browser
                                 <div class="Card-category">{{tegs}} |
                                 </div>
                                 {%endfor%}
-                                <div class="Card-hover"><a class="Card-btn" href="#"><img
+                                <div class="Card-hover"><a class="Card-btn"
+                                                           href="http://127.0.0.1:8000/prod/catalog/prod/add_in_cart/{{prod.id}}"><img
                                         src="{% static 'assets/img/icons/card/cart.svg'%}" alt="cart.svg"/></a>
                                 </div>
                             </div>
@@ -262,7 +263,8 @@ p.error-browser
                                             <div class="Card-category">{{tegs}} |
                                             </div>
                                             {%endfor%}
-                                            <div class="Card-hover"><a class="Card-btn" href="#"><img
+                                            <div class="Card-hover"><a class="Card-btn"
+                                                                       href="http://127.0.0.1:8000/prod/catalog/prod/add_in_cart/{{prod.id}}"><img
                                                     src="{% static 'assets/img/icons/card/cart.svg'%}" alt="cart.svg"/></a>
                                             </div>
                                         </div>

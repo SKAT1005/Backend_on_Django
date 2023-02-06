@@ -1,7 +1,8 @@
 from django.urls import path
 
 from .views import register_view, LoginView, Logout_View, UserEditFormView, HistoryList, HistoryDetail, CartView, \
-    OrderView, trans_pay, PaymentForm, PaymentSomeoneForm, UserView, PasswordRecoveryStepOne, PasswordRecoveryStepTwo, ChangingThePassword, AboutView, RepeatOrderView
+    OrderView, PaymentForm, PaymentSomeoneForm, UserView, PasswordRecoveryStepOne, PasswordRecoveryStepTwo, \
+    ChangingThePassword, AboutView, RepeatOrderView
 
 urlpatterns = [
     path('', AboutView.as_view(), name='about'),
@@ -18,8 +19,7 @@ urlpatterns = [
     path('profile/cart', CartView.as_view(), name='cart'),
     path('profile/order', OrderView.as_view(), name='order'),
     path('profile/order/<int:pk>', RepeatOrderView.as_view(), name='order'),
-    path('profile/trans_pay/<int:pk>', trans_pay, name='trans_pay'),
-    path('profile/payment', PaymentForm.as_view(), name='payment_form'),
-    path('profile/payment_someone', PaymentSomeoneForm.as_view(), name='payment_someone_form'),
+    path('profile/payment/<int:pk>', PaymentForm.as_view(), name='payment_form'),
+    path('profile/payment_someone/<int:pk>', PaymentSomeoneForm.as_view(), name='payment_someone_form'),
 
 ]

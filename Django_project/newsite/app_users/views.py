@@ -1,5 +1,3 @@
-import random
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
@@ -203,6 +201,7 @@ class OrderView(View):
         profile = Profile.objects.get(id=request.user.id)
         cart = profile.cart.all()
         category = Category.objects.all()
+        total_price = 0
         form = OrderForm(initial={'phone_number': request.user.users.phone_number,
                                   'city': request.user.users.city,
                                   'address': request.user.users.address,
@@ -210,9 +209,11 @@ class OrderView(View):
         return render(request, 'registration/order.html',
                       context={'form': form,
                                'category': category,
-                               'cart': cart})
+                               'cart': cart,
+                               'total_price': total_price})
 
     def post(self, request):
+        total_price = 0
         form = OrderForm(request.POST)
         category = Category.objects.all()
         profile = Profile.objects.get(id=request.user.id)
@@ -246,13 +247,14 @@ class OrderView(View):
                     else:
                         history.total_price += delivery.delivery + delivery.express_delivery
                 if history.type_of_pay == 'Онлайн картой':
-                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/trans_pay/1')
+                    return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment/{history.id}')
                 else:
-                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/trans_pay/2')
+                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/payment_someone/{history.id}')
         return render(request, 'registration/order.html',
                       context={'form': form,
                                'category': category,
-                               'cart': cart})
+                               'cart': cart,
+                               'total_price': total_price})
 
 
 class RepeatOrderView(View):
@@ -262,16 +264,20 @@ class RepeatOrderView(View):
         last_history = History.objects.get(id=pk)
         cart = last_history.prods.all()
         category = Category.objects.all()
+        total_price = last_history.total_price
         form = OrderForm(initial={'phone_number': request.user.users.phone_number,
                                   'city': request.user.users.city,
                                   'address': request.user.users.address,
-                                  'first_name': request.user.first_name})
+                                  'first_name': request.user.first_name,
+                                  'total_price': total_price})
         return render(request, 'registration/order.html',
                       context={'form': form,
                                'category': category,
                                'cart': cart})
 
     def post(self, request, pk):
+        last_history = History.objects.get(id=pk)
+        total_price = last_history.total_price
         form = OrderForm(request.POST)
         category = Category.objects.all()
         last_history = History.objects.get(id=pk)
@@ -289,7 +295,7 @@ class RepeatOrderView(View):
                     user=profile,
                     type_of_delivery=request.POST.get('delivery'),
                     type_of_pay=request.POST.get('pay'),
-                    total_price=profile.total_price,
+                    total_price=total_price,
                     status='Не оплачено', )
                 profile.history.add(history)
                 history.prods.set(cart)
@@ -305,35 +311,28 @@ class RepeatOrderView(View):
                     else:
                         history.total_price += delivery.delivery + delivery.express_delivery
                 if history.type_of_pay == 'Онлайн картой':
-                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/trans_pay/1')
+                    return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment/{history.id}')
                 else:
-                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/trans_pay/2')
+                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/payment_someone/{history.id}')
         return render(request, 'registration/order.html',
                       context={'form': form,
                                'category': category,
-                               'cart': cart})
-
-
-def trans_pay(request, pk):
-    """Функция, которая переправляет пользователя на страницу с оплатой"""
-    if pk == 1:
-        return HttpResponseRedirect('http://127.0.0.1:8000/profile/payment')
-    else:
-        return HttpResponseRedirect('http://127.0.0.1:8000/profile/payment_someone')
+                               'cart': cart,
+                               'total_price': total_price})
 
 
 class PaymentForm(View):
     """Представление оплаты"""
 
-    def get(self, request):
+    def get(self, request, pk):
         category = Category.objects.all()
         return render(request, 'registration/payment.html',
                       context={'category': category})
 
-    def post(self, request):
+    def post(self, request, pk):
         category = Category.objects.all()
         profile = Profile.objects.get(id=request.user.id)
-        history = History.objects.filter(user=profile).latest('pub_date')
+        history = History.objects.get(id=pk)
         if int(request.POST.get('numero1')) <= 100000000 and int(request.POST.get('numero1')) % 10 != 0 and int(
                 request.POST.get('numero1')) % 2 == 0:
             history.status = 'Оплачен'
@@ -350,16 +349,15 @@ class PaymentSomeoneForm(View):
     """Представление рандомной оплаты"""
     print(13414141414)
 
-    def get(self, request):
-        print(13414141414)
+    def get(self, request, pk):
         category = Category.objects.all()
         return render(request, 'registration/paymentsomeone.html',
                       context={'category': category})
 
-    def post(self, request):
+    def post(self, request, pk):
         category = Category.objects.all()
         profile = Profile.objects.get(id=request.user.id)
-        history = History.objects.filter(user=profile).latest('pub_date')
+        history = History.objects.get(id=pk)
         cart_number = int(request.POST.get('numero1').replace(' ', ''))
         if cart_number <= 100000000 and cart_number % 10 != 0 and cart_number % 2 == 0:
             history.status = 'Оплачен'
