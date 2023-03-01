@@ -249,7 +249,7 @@ class OrderView(View):
                 if history.type_of_pay == 'Онлайн картой':
                     return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment/{history.id}')
                 else:
-                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/payment_someone/{history.id}')
+                    return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment_someone/{history.id}')
         return render(request, 'registration/order.html',
                       context={'form': form,
                                'category': category,
@@ -313,7 +313,7 @@ class RepeatOrderView(View):
                 if history.type_of_pay == 'Онлайн картой':
                     return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment/{history.id}')
                 else:
-                    return HttpResponseRedirect('http://127.0.0.1:8000/profile/payment_someone/{history.id}')
+                    return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment_someone/{history.id}')
         return render(request, 'registration/order.html',
                       context={'form': form,
                                'category': category,
