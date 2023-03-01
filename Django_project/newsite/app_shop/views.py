@@ -17,7 +17,7 @@ class HomePage(View):
             sell_cat = profile.selected_category.all()[:3]
             popular_prod = Product.objects.order_by('reviews')[:8]
             limited_prod = Product.objects.filter(limited_edition=True)[:16]
-            return render(request, 'registration/index.html', context={'sell_cat': sell_cat,
+            return render(request, 'index.html', context={'sell_cat': sell_cat,
                                                                        'popular_prod': popular_prod,
                                                                        'limited_prod': limited_prod,
                                                                        'category': category})
@@ -33,7 +33,7 @@ class Catalog(View):
         prod = Product.objects.all()
         filter_form = FilterForm
         tegs = Tegs.objects.all()
-        return render(request, 'registration/catalog.html', context={'category': category,
+        return render(request, 'catalog.html', context={'category': category,
                                                                      'prod': prod,
                                                                      'filter_form': filter_form,
                                                                      'tegs': tegs})
@@ -48,7 +48,7 @@ class Catalog(View):
             prod = Product.objects.all()
             filter_form = FilterForm
             tegs = Tegs.objects.all()
-            return render(request, 'registration/catalog.html', context={'category': category,
+            return render(request, 'catalog.html', context={'category': category,
                                                                          'prod': prod,
                                                                          'filter_form': filter_form,
                                                                          'tegs': tegs})
@@ -62,7 +62,7 @@ class CatalogFilter(View):
         prod = Product.objects.filter(name=pk)
         filter_form = FilterForm
         tegs = Tegs.objects.all()
-        return render(request, 'registration/catalog.html', context={'category': category,
+        return render(request, 'catalog.html', context={'category': category,
                                                                      'prod': prod,
                                                                      'filter_form': filter_form,
                                                                      'tegs': tegs})
@@ -76,7 +76,7 @@ class CatalogFilter(View):
         else:
             category = Category.objects.all()
             prod = Product.objects.filter(name=pk)
-            return render(request, 'registration/catalog.html', context={'category': category,
+            return render(request, 'catalog.html', context={'category': category,
                                                                          'prod': prod,
                                                                          'filter_form': filter_form,
                                                                          'tegs': tegs})
@@ -91,7 +91,7 @@ class CatalogFilterTeg(View):
         filter_tegs = Tegs.objects.get(id=pk)
         prod = Product.objects.filter(tegs=filter_tegs)
         filter_form = FilterForm
-        return render(request, 'registration/catalog.html', context={'category': category,
+        return render(request, 'catalog.html', context={'category': category,
                                                                      'prod': prod,
                                                                      'filter_form': filter_form,
                                                                      'tegs': tegs})
@@ -106,7 +106,7 @@ class CatalogFilterTeg(View):
             category = Category.objects.all()
             filter_tegs = Tegs.objects.get(id=pk)
             prod = Product.objects.filter(tegs=filter_tegs)
-            return render(request, 'registration/catalog.html', context={'category': category,
+            return render(request, 'catalog.html', context={'category': category,
                                                                          'prod': prod,
                                                                          'filter_form': filter_form,
                                                                          'tegs': tegs})
@@ -121,7 +121,7 @@ class FilterCategoryView(View):
         filter_category = Category.objects.get(id=pk)
         prod = Product.objects.filter(category=filter_category)
         filter_form = FilterForm
-        return render(request, 'registration/catalog.html', context={'category': category,
+        return render(request, 'catalog.html', context={'category': category,
                                                                      'prod': prod,
                                                                      'filter_form': filter_form,
                                                                      'tegs': tegs})
@@ -136,7 +136,7 @@ class FilterCategoryView(View):
             category = Category.objects.all()
             filter_category = Category.objects.get(id=pk)
             prod = Product.objects.filter(tegs=filter_category)
-            return render(request, 'registration/catalog.html', context={'category': category,
+            return render(request, 'catalog.html', context={'category': category,
                                                                          'prod': prod,
                                                                          'filter_form': filter_form,
                                                                          'tegs': tegs})
@@ -161,7 +161,7 @@ class FilterPriceAndPopular(View):
             print(4)
             prod = Product.objects.order_by("-reviews_count")
         filter_form = FilterForm
-        return render(request, 'registration/catalog.html', context={'category': category,
+        return render(request, 'catalog.html', context={'category': category,
                                                                      'prod': prod,
                                                                      'filter_form': filter_form,
                                                                      'tegs': tegs})
@@ -182,7 +182,7 @@ class FilterPriceAndPopular(View):
                 prod = Product.objects.order_by("count")
             else:
                 prod = Product.objects.order_by("-count")
-        return render(request, 'registration/catalog.html', context={'category': category,
+        return render(request, 'catalog.html', context={'category': category,
                                                                      'prod': prod,
                                                                      'filter_form': filter_form,
                                                                      'tegs': tegs})
@@ -209,7 +209,7 @@ def detail_prod(request, pk):
                 form = ReviewsForm()
         else:
             return HttpResponseRedirect('http://127.0.0.1:8000/login/')
-    return render(request, 'registration/product.html', {'form': form,
+    return render(request, 'product.html', {'form': form,
                                                          'category': category,
                                                          'prod': prod, })
 

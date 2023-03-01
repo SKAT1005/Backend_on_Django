@@ -18,7 +18,7 @@ urlpatterns = [
     path('profile/history/<int:pk>', HistoryDetail.as_view(), name='history_detail'),
     path('profile/cart', CartView.as_view(), name='cart'),
     path('profile/order', OrderView.as_view(), name='order'),
-    path('profile/order/<int:pk>', RepeatOrderView.as_view(), name='order'),
+    path('profile/order/<int:pk>', RepeatOrderView.as_view(), name='order_detail'),
     path('profile/payment/<int:pk>', PaymentForm.as_view(), name='payment_form'),
     path('profile/payment_someone/<int:pk>', PaymentSomeoneForm.as_view(), name='payment_someone_form'),
 

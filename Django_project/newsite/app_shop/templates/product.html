@@ -1,0 +1,433 @@
+<!--END-->
+<!--END-->
+{% load static %}
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if IE 10]>
+<html class="ie10" lang="ru">
+<![endif]-->
+<!--[if IE 11]>
+<html class="ie11" lang="ru">
+<![endif]-->
+<!--[if gt IE 11]><!-->
+<html lang="ru">
+<!--<![endif]-->
+
+<head>
+    <title>Megano</title>
+    <meta name="description" content="Описание страницы">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link href="../../static/favicon.ico" rel="shortcut icon">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Regular.woff' %}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Italic.woff' %}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Bold.woff'%}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Bold_Italic.woff'%}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Light.woff'%}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Light_Italic.woff'%}" as="font">
+    <link rel="stylesheet" href="{% static 'assets/css/fonts.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/basic.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/extra.css'%}">
+    <script src="{% static 'assets/plg/CountDown/countdown.js' %}"></script>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+<body class="Site">
+<!--if lt IE 8
+p.error-browser
+  | Ваш браузер&nbsp;
+  em устарел!&nbsp;
+  a(href="http://browsehappy.com/") Выберите новую версию
+      +s
+      | браузера здесь&nbsp;
+  | для правильного отображения сайта.
+-->
+<header class="Header">
+    <div class="ControlPanel">
+        <div class="wrap">
+            <div class="row ControlPanel-row">
+                <div class="row-block">
+                    <div class="row ControlPanel-rowSplit">
+                        <div class="row-block hide_700">
+                            <ul class="menu menu_img menu_smallImg ControlPanel-menu">
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'assets/img/icons/socialHeader/tw.svg'%}" alt="tw.svg"/></a>
+                                </li>
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'assets/img/icons/socialHeader/in.svg'%}" alt="in.svg"/></a>
+                                </li>
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'assets/img/icons/socialHeader/pt.svg'%}" alt="pt.svg"/></a>
+                                </li>
+                                <li class="menu-item"><a class="menu-link" href="#"><img
+                                        src="{% static 'assets/img/icons/socialHeader/mail.svg'%}" alt="mail.svg"/></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <nav class="row-block">
+                    <div class="row ControlPanel-rowSplit">
+                        {% if not request.user.is_authenticated %}
+                        <div class="row-block"><a class="ControlPanel-title" href="{%url 'login'%}">Вход</a>
+                            <a class="ControlPanel-title" href="{%url 'register'%}">Регистрация</a>
+                        </div>
+                        {%endif%}
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--+div.menuModal#navigate
+  //    +menu([
+  //        ['Главная','index.html'],
+  //        ['Портфолио','index.html'],
+  //        ['Мои проекты','index.html'],
+  //        ['Контакты','index.html']
+  //    ], page === 'article'? 'Портфолио': 'Главная')._main
+
+  block
+  -->
+    </div>
+    <div class="wrap">
+        <div class="row Header-rowMain">
+            <div class="row-block Header-logo"><a class="logo" href="{%url 'homepage'%}"><img
+                    class="logo-image"
+                    src="{% static 'assets/img/logo.png'%}"
+                    alt="logo.png"/></a>
+            </div>
+            <nav class="row-block row-block_right Header-menu">
+                <div class="menuModal" id="navigate">
+                    <ul class="menu menu_main">
+                        <li class="menu-item"><a class="menu-link" href="{%url 'homepage'%}">Главная</a>
+                        </li>
+                        <li class="menu-item"><a class="menu-link" href="{%url 'catalog'%}">Каталог</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="row-block">
+                {% if request.user.is_authenticated %}
+                <div class="CartBlock">
+                    <div class="dropdown">
+                        <button class="dropbtn"><img class="CartBlock-img"
+                                                     src="{% static 'assets/img/icons/loon-icon.svg'%}"
+                                                     alt="loon-icon.svg"/></button>
+                        <div class="dropdown-content">
+                            <a class="dropdown-content-a" href="{%url 'user_detail'%}">Личный кабинет</a>
+                            {%if request.user.groups.1 == Администратор%}
+                            <a class="dropdown-content-a" href="{%url 'admin'%}">Административный раздел</a>
+                            {%endif%}
+                            <a class="dropdown-content-a" href="{%url 'logout'%}">Выход</a>
+                        </div>
+                    </div>
+                    <a class="CartBlock-block" href="{%url 'cart'%}"><img class="CartBlock-img"
+                                                                                              src="{% static 'assets/img/icons/cart.svg'%}"
+                                                                                              alt="cart.svg"/></a>
+
+                </div>
+                {%endif%}
+            </div>
+            <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
+                <div class="menuTrigger-content">Показать навигацию
+                </div>
+                <span></span><span></span><span></span>
+            </a>
+            </div>
+        </div>
+    </div>
+    <div class="Header-searchWrap">
+        <div class="wrap">
+            <div class="Header-categories">
+                <div class="CategoriesButton">
+                    <div class="CategoriesButton-title">
+                        <div class="CategoriesButton-icon"><img src="{% static 'assets/img/icons/allDep.svg' %}"
+                                                                alt="allDep.svg"/>
+                        </div>
+                        <span class="CategoriesButton-text">Все категории</span>
+                        <div class="CategoriesButton-arrow">
+                        </div>
+                    </div>
+                    <div class="CategoriesButton-content">
+                        {%for category in category%}
+                        <div class="CategoriesButton-link"><a
+                                href="{%url 'catalog_filter_category' category.pk%}">
+                            <div class="CategoriesButton-icon">
+                            </div>
+                            <span class="CategoriesButton-text">{{category.name}}</span></a>
+                            <a href="{%url 'select_category' category.pk %}"><img
+                                    src="{% static 'assets/img/icons/favorites.svg' %}"/></a>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="Middle Middle_top">
+    <div class="Section">
+        <div class="wrap">
+            <div class="Product">
+                <div class="ProductCard">
+                    <div class="ProductCard-look">
+                        <div class="ProductCard-photo">
+                            <img src="{% static 'dd'%}{{prod.photo.url}}" alt="bigGoods.png"/>
+                        </div>
+
+                    </div>
+                    <div class="ProductCard-desc">
+                        <div class="ProductCard-header">
+                            <h2 class="ProductCard-title">{{prod.name}}
+                            </h2>
+                            <div class="ProductCard-info">
+                                <div class="ProductCard-cost">
+                                    <div class="ProductCard-price">{{prod.price}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ProductCard-text">
+                            <ul>
+                                {{prod.description}}
+                            </ul>
+                        </div>
+                        <div class="ProductCard-cart">
+
+                            <div class="ProductCard-cartElement"><a class="btn btn_primary" href="#modal_open"><img
+                                    class="btn-icon" src="{% static 'assets/img/icons/card/cart_white.svg'%}"
+                                    alt="cart_white.svg"/><span class="btn-content">Купить</span></a>
+                            </div>
+                            <div id="modal_open" class="my_modal">
+                                <div class="my_modal-dialog">
+                                    <div class="my_modal-content">
+                                        <div class="my_modal-header">
+                                            <p class="my_modal-title">Поздравляем!</p>
+                                            <a href="{%url 'add_prod_in_cart' prod.pk%}"
+                                               title="Закрыть модальное окно" class="close">×</a>
+                                        </div>
+                                        <div class="my_modal-body">
+                                            <p>Товар успешно добавлен в корзину!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ProductCard-footer">
+                            <div class="ProductCard-tags">
+                                <strong class="ProductCard-tagsTitle">Категория:
+                                </strong>{%for cat in prod.category.all%}
+                                <a href="{%url 'catalog_filter_category' cat.pk%}">
+                                    {{cat.name}}</a>
+                                {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Tabs Tabs_default">
+                    <div class="Tabs-links"><a class="Tabs-link_ACTIVE Tabs-link"
+                                               href="#description"><span>Описание</span></a><a class="Tabs-link"
+                                                                                               href="#addit"><span>Характеристика</span></a><a
+                            class="Tabs-link" href="#reviews"><span>Отзывы ({{prod.reviews_count}})</span></a>
+                    </div>
+                    <div class="Tabs-wrap">
+                        <div class="Tabs-block" id="description">
+                            <h2>Описание
+                            </h2>
+                            <p>
+                                {{prod.description}}
+                            </p>
+                            <div class="clearfix">
+                            </div>
+                            <div class="table">
+                                <table>
+                                    <tr>
+                                        <th>Характеристика
+                                        </th>
+                                        <th>Значение
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>Производитель
+                                        </td>
+                                        <td>{{prod.manufacturer}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="Tabs-block" id="sellers">
+                            <div class="Categories Categories_product">
+                            </div>
+                        </div>
+                        <div class="Tabs-block" id="addit">
+                            <div class="Product-props">
+                                {%for char in prod.characteristics.all%}
+                                <div class="Product-prop">
+                                    <strong>{{char.name}}
+                                    </strong><span> {{char.value}}</span>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
+                        <div class="Tabs-block" id="reviews">
+                            <header class="Section-header">
+                                <h3 class="Section-title">Отзывы: {{prod.reviews_count}}
+                                </h3>
+                            </header>
+                            <div class="Comments">
+                                {% if prod.reviews_count > 0 %}
+                                {%for comment in prod.reviews.all%}
+                                <div class="Comment">
+                                    <div class="Comment-column Comment-column_pict">
+                                        <div class="Comment-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="Comment-column">
+                                        <header class="Comment-header">
+                                            <div>
+                                                <strong class="Comment-title">{{comment.user_name}}
+                                                </strong><span class="Comment-date">{{comment.date}}</span>
+                                            </div>
+                                        </header>
+                                        <div class="Comment-content">
+                                            {{comment.text}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                                {%else%}
+                                <h2>К сожалению отзывов нет</h2>
+                                {%endif%}
+                            </div>
+                            <header class="Section-header Section-header_product">
+                                <h3 class="Section-title">Добавить отзыв
+                                </h3>
+                            </header>
+                            <div class="Tabs-addComment">
+                                <form class="form" action="#" method="post">
+                                    <div class="form-group">
+                                        {% csrf_token %}
+                                        {{form.text}}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button class="btn btn_muted" type="submit">Отправить отзыв
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer class="Footer">
+    <div class="wrap">
+        <div class="row Footer-main">
+            <div class="row-block"><a class="logo Footer-logo" href="{%url 'homepage' %}"><img class="logo-image"
+                                                                                                      src="{% static 'assets/img/logo_footer.png'%}"
+                                                                                                      alt="logo_footer.png"/></a>
+                <p>Мы являемся партнерами Яндекс.Маркета, что указывает на добросовестность магазина (специалисты
+                    Яндекса систематически проводят проверки работы консультантов и магазина в целом). Также на этой
+                    площадке Вы можете почитать дополнительные отзывы, которые не оставили на нашем сайте.
+                </p>
+                <ul class="menu menu_img menu_smallImg Footer-menuSoc">
+                    <li class="menu-item"><a class="menu-link" href="#"><img
+                            src="{% static 'assets/img/icons/socialFooter/fb.svg'%}" alt="fb.svg"/></a>
+                    </li>
+                    <li class="menu-item"><a class="menu-link" href="#"><img
+                            src="{% static 'assets/img/icons/socialFooter/tw.svg'%}" alt="tw.svg"/></a>
+                    </li>
+                    <li class="menu-item"><a class="menu-link" href="#"><img
+                            src="{% static 'assets/img/icons/socialFooter/in.svg'%}" alt="in.svg"/></a>
+                    </li>
+                    <li class="menu-item"><a class="menu-link" href="#"><img
+                            src="{% static 'assets/img/icons/socialFooter/pt.svg'%}" alt="pt.svg"/></a>
+                    </li>
+                    <li class="menu-item"><a class="menu-link" href="#"><img
+                            src="{% static 'assets/img/icons/socialFooter/mail.svg'%}" alt="mail.svg"/></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row-block">
+                <strong class="Footer-title">Навигация
+                </strong>
+                <ul class="menu menu_vt Footer-menu">
+                    <li class="menu-item"><a class="menu-link" href="{%url 'homepage' %}">Главная</a>
+                    </li>
+                    <li class="menu-item"><a class="menu-link" href="{%url 'catalog' %}">Каталог</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="menu-item"><a class="menu-link" href="{%url 'user_detail' %}">Профиль</a>
+                    </li>
+                    {%endif%}
+                </ul>
+            </div>
+
+
+            <div class="row-block">
+                <strong class="Footer-title">Контакты
+                </strong>
+                <p>Phone: 8.800.555.3535<br>Email: Support@ninzio.com<br>Skype: techno<br>Address: Мурино<br>бульвар
+                    Менделеева 9 к 3<br>13344
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="Footer-copy">
+        <div class="wrap">
+            <div class="row row_space">
+                <div class="row-block">© Copyright&#32;<a href="#">Megano Store.</a>&#32;Все права защищены.
+                </div>
+                <div class="row-block"><span>Принятые платежи</span>
+                    <div class="Footer-payments">
+                        <div><img src="{% static 'assets/img/payments/visa.png'%}" alt="visa.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/mastercard.png'%}" alt="mastercard.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/paypal.png'%}" alt="paypal.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/american.png'%}" alt="american.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/electron.png'%}" alt="electron.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/maestro.png'%}" alt="maestro.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/delta.png'%}" alt="delta.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/e.png'%}" alt="e.png"/>
+                        </div>
+                        <div><img src="{% static 'assets/img/payments/dk.png'%}" alt="dk.png"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--+Middle-->
+<!--    +div.-top-->
+<!--        +breadcrumbs('Главная','Портфолио')-->
+<!--    +Article('portfolio')-->
+<!---->
+<script src="{% static 'assets/plg/jQuery/jquery-3.5.0.slim.min.js'%}"></script>
+<script src="{% static 'assets/plg/form/jquery.form.js'%}"></script>
+<script src="{% static 'assets/plg/form/jquery.maskedinput.min.js'%}"></script>
+<script src="{% static 'assets/plg/range/ion.rangeSlider.min.js'%}"></script>
+<script src="{% static 'assets/plg/Slider/slick.min.js'%}"></script>
+<script src="{% static 'assets/js/scripts.js'%}"></script>
+</body>
+
+</html>

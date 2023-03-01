@@ -18,11 +18,11 @@ ERROR_LIST = [
 
 
 class AboutView(View):
-    """Представление для странице О нас"""
+    """Представление для страницы О нас"""
 
     def get(self, request):
         category = Category.objects.all
-        return render(request, 'registration/about.html', context={'category': category})
+        return render(request, 'about.html', context={'category': category})
 
 
 class Login_View(LoginView):
@@ -41,7 +41,7 @@ class PasswordRecoveryStepOne(View):
 
     def get(self, request):
         form = EmailForm
-        return render(request, 'registration/e-mail.html', context={'form': form,
+        return render(request, 'e-mail.html', context={'form': form,
                                                                     'error': self.error})
 
     def post(self, request):
@@ -51,7 +51,7 @@ class PasswordRecoveryStepOne(View):
             if User.objects.get(username=email):
                 return HttpResponseRedirect(f'http://127.0.0.1:8000/recovery_password/{email}')
             self.error = 'Данного пользователя не существует'
-        return render(request, 'registration/e-mail.html', context={'form': form,
+        return render(request, 'e-mail.html', context={'form': form,
                                                                     'error': self.error})
 
 
@@ -60,7 +60,7 @@ class PasswordRecoveryStepTwo(View):
 
     def get(self, request, pk):
         form = PasswordForm
-        return render(request, 'registration/password.html', context={'form': form})
+        return render(request, 'password.html', context={'form': form})
 
     def post(self, request, pk):
         form = EmailForm(request.POST)
@@ -70,7 +70,7 @@ class PasswordRecoveryStepTwo(View):
             user.password = password
             user.save()
             return HttpResponseRedirect('http://127.0.0.1:8000/')
-        return render(request, 'registration/password.html', context={'form': form})
+        return render(request, 'password.html', context={'form': form})
 
 
 class ChangingThePassword(View):
@@ -78,7 +78,7 @@ class ChangingThePassword(View):
 
     def get(self, request):
         form = PasswordForm
-        return render(request, 'registration/password.html', context={'form': form})
+        return render(request, 'password.html', context={'form': form})
 
     def post(self, request):
         form = EmailForm(request.POST)
@@ -88,7 +88,7 @@ class ChangingThePassword(View):
             user.password = password
             user.save()
             return HttpResponseRedirect('http://127.0.0.1:8000/profile')
-        return render(request, 'registration/password.html', context={'form': form})
+        return render(request, 'password.html', context={'form': form})
 
 
 def register_view(request):
@@ -120,7 +120,7 @@ class UserView(View):
             history = profile.history.latest('id')
         except Exception:
             history = False
-        return render(request, 'registration/account.html', context={'profile': profile,
+        return render(request, 'account.html', context={'profile': profile,
                                                                      'history': history,
                                                                      'category': category})
 
@@ -134,7 +134,7 @@ class UserEditFormView(View):
         form = UserEditForm(instance=profile, initial={'username': request.user.username,
                                                        'first_name': request.user.first_name,
                                                        'phone_number': profile.phone_number})
-        return render(request, 'registration/profile.html',
+        return render(request, 'profile.html',
                       context={'form': form, 'category': category, 'profile': profile})
 
     def post(self, request):
@@ -152,7 +152,7 @@ class UserEditFormView(View):
             request.user.first_name = form.cleaned_data.get('first_name')
             request.user.save()
             return HttpResponseRedirect('http://127.0.0.1:8000/profile/')
-        return render(request, 'registration/profile.html',
+        return render(request, 'profile.html',
                       context={'form': form, 'category': category, 'profile': profile})
 
 
@@ -165,7 +165,7 @@ class HistoryList(View):
         except Exception:
             history_list = False
         category = Category.objects.all()
-        return render(request, 'registration/historyorder.html',
+        return render(request, 'historyorder.html',
                       context={'history_list': history_list,
                                'category': category})
 
@@ -176,7 +176,7 @@ class HistoryDetail(View):
     def get(self, request, pk):
         history = History.objects.get(id=pk)
         category = Category.objects.all()
-        return render(request, 'registration/oneorder.html',
+        return render(request, 'oneorder.html',
                       context={'history': history,
                                'category': category})
 
@@ -188,7 +188,7 @@ class CartView(View):
         profile = Profile.objects.get(id=request.user.id)
         cart = profile.cart.all()
         category = Category.objects.all()
-        return render(request, 'registration/cart.html',
+        return render(request, 'cart.html',
                       context={'cart': cart,
                                'profile': profile,
                                'category': category})
@@ -206,7 +206,7 @@ class OrderView(View):
                                   'city': request.user.users.city,
                                   'address': request.user.users.address,
                                   'first_name': request.user.first_name})
-        return render(request, 'registration/order.html',
+        return render(request, 'order.html',
                       context={'form': form,
                                'category': category,
                                'cart': cart,
@@ -250,7 +250,7 @@ class OrderView(View):
                     return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment/{history.id}')
                 else:
                     return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment_someone/{history.id}')
-        return render(request, 'registration/order.html',
+        return render(request, 'order.html',
                       context={'form': form,
                                'category': category,
                                'cart': cart,
@@ -270,7 +270,7 @@ class RepeatOrderView(View):
                                   'address': request.user.users.address,
                                   'first_name': request.user.first_name,
                                   'total_price': total_price})
-        return render(request, 'registration/order.html',
+        return render(request, 'order.html',
                       context={'form': form,
                                'category': category,
                                'cart': cart})
@@ -314,7 +314,7 @@ class RepeatOrderView(View):
                     return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment/{history.id}')
                 else:
                     return HttpResponseRedirect(f'http://127.0.0.1:8000/profile/payment_someone/{history.id}')
-        return render(request, 'registration/order.html',
+        return render(request, 'order.html',
                       context={'form': form,
                                'category': category,
                                'cart': cart,
@@ -326,7 +326,7 @@ class PaymentForm(View):
 
     def get(self, request, pk):
         category = Category.objects.all()
-        return render(request, 'registration/payment.html',
+        return render(request, 'payment.html',
                       context={'category': category})
 
     def post(self, request, pk):
@@ -337,21 +337,20 @@ class PaymentForm(View):
                 request.POST.get('numero1')) % 2 == 0:
             history.status = 'Оплачен'
             history.save()
-            return render(request, 'registration/progressPayment.html', context={'category': category})
+            return render(request, 'progressPayment.html', context={'category': category})
         else:
             history.status = 'Ошибка'
             history.error = 'Неверные реквизиты карты'
             history.save()
-            return render(request, 'registration/progressPayment.html', context={'category': category})
+            return render(request, 'progressPayment.html', context={'category': category})
 
 
 class PaymentSomeoneForm(View):
     """Представление рандомной оплаты"""
-    print(13414141414)
 
     def get(self, request, pk):
         category = Category.objects.all()
-        return render(request, 'registration/paymentsomeone.html',
+        return render(request, 'paymentsomeone.html',
                       context={'category': category})
 
     def post(self, request, pk):
@@ -365,4 +364,4 @@ class PaymentSomeoneForm(View):
             history.status = 'Ошибка'
             history.error = 'Неверные реквизиты карты'
 
-        return render(request, 'registration/progressPayment.html', context={'category': category})
+        return render(request, 'progressPayment.html', context={'category': category})
